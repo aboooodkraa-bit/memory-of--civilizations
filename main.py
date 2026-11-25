@@ -66,7 +66,14 @@ def topic_nav(sec_id, topic_idx, total_topics):
 
 @dp.message(CommandStart())
 async def start(message: Message):
-    await message.answer("🏛️ ذاكرة الحضارات\nرحلة عبر حضارات القرن الإفريقي\n\nاختر من القائمة:", reply_markup=main_menu())
+    welcome_text = (
+        "🏛️ **ذاكرة الحضارات**\n"
+        "رحلة عبر حضارات القرن الإفريقي\n\n"
+        "اختر من القائمة أدناه للبدء:\n"
+        "━━━━━━━━━━━━━━━━━━\n"
+        "👨‍🎓 *إعداد الطلبة:* كراع عبد الغفور، تواتي صالح، بتيش وصال، وصال حداد."
+    )
+    await message.answer(welcome_text, reply_markup=main_menu(), parse_mode="Markdown")
 
 @dp.callback_query(F.data == "main_menu")
 async def back_main(c: CallbackQuery):
@@ -74,7 +81,20 @@ async def back_main(c: CallbackQuery):
 
 @dp.callback_query(F.data == "about")
 async def about(c: CallbackQuery):
-    await c.message.edit_text("ℹ️ حول المشروع\nموسوعة رقمية تفاعلية مبنية على بحث جامعي.", reply_markup=InlineKeyboardBuilder().button(text="⬅️ الرئيسية", callback_data="main_menu").as_markup())
+    text = (
+        "ℹ️ **حول المشروع**\n\n"
+        "موسوعة رقمية تفاعلية مبنية على بحث جامعي بعنوان:\n"
+        "«الحضارات المبكرة في القرن الإفريقي»\n\n"
+        "👨‍🎓 **إعداد الطلبة:**\n"
+        "• كراع عبد الغفور (المبرمج)\n"
+        "• تواتي صالح\n"
+        "• بتيش وصال\n"
+        "• وصال حداد\n\n"
+        "*(تحت إشراف أستاذ مادة التاريخ)*"
+    )
+    b = InlineKeyboardBuilder()
+    b.button(text="⬅️ الرئيسية", callback_data="main_menu")
+    await c.message.edit_text(text, reply_markup=b.as_markup(), parse_mode="Markdown")
 
 @dp.callback_query(F.data == "start_journey")
 async def journey(c: CallbackQuery): await show_intro(c, 0)
