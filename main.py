@@ -5,9 +5,10 @@ from aiogram import Bot, Dispatcher, F
 from aiogram.filters import CommandStart
 from aiogram.types import Message, CallbackQuery
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from config import BOT_TOKEN
 from research_text import MABAHITH_DATA, INTRO, CONCLUSION, GLOSSARY, REFERENCES
 
+# قراءة التوكن مباشرة من متغيرات البيئة في Render
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
